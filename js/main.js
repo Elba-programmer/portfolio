@@ -83,3 +83,25 @@ document.querySelectorAll(".navbar ul li a").forEach(a => {
   const href = a.getAttribute("href");
   if (href === currentPage) a.classList.add("active");
 });
+
+/* Theme picker */
+const themeButtons = document.querySelectorAll(".theme-swatch");
+const savedTheme = localStorage.getItem("portfolio-theme") || "neon";
+document.body.dataset.theme = savedTheme;
+
+function markTheme(theme) {
+  themeButtons.forEach(button => {
+    button.classList.toggle("active", button.dataset.theme === theme);
+  });
+}
+
+markTheme(savedTheme);
+
+themeButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    const theme = button.dataset.theme;
+    document.body.dataset.theme = theme;
+    localStorage.setItem("portfolio-theme", theme);
+    markTheme(theme);
+  });
+});
